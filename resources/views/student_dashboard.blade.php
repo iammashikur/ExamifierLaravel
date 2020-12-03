@@ -20,20 +20,55 @@
 
 
         <div class="col-md-9 mt-4">
-            <div class="content">
-                <canvas class="snow" id="snow"></canvas>
-                <div class="main-text">
-                    <h1>No Exams<br/>Completed Yet..</h1><a class="home-link" href="#">Start An Exam.</a>
-                </div>
-                <div class="ground">
-                    <div class="mound">
 
-                        <div class="mound_spade"></div>
+            @foreach ($exams as $item)
+
+                @php
+                    $check = App\StudentData::where('student_id', Auth::user()->id)->where('exam_id', $item->id)->count();
+                @endphp
+
+                @if ($check == 0)
+
+                <div class="content">
+                    <canvas class="snow" id="snow"></canvas>
+                    <div class="main-text">
+                        <h1>Welcome !<br/>To Examifier..</h1><a class="home-link" href="{{route('student.exams')}}">Start An Exam.</a>
+                    </div>
+                    <div class="ground">
+                        <div class="mound">
+
+                            <div class="mound_spade"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+
+                @else
+
+                <div class="content">
+                    <canvas class="snow" id="snow"></canvas>
+                    <div class="main-text">
+                        <h1>Welcome !<br/>To Examifier ..</h1><a class="home-link" href="{{route('student.results')}}">See Your Result.</a>
+                    </div>
+                    <div class="ground">
+                        <div class="mound">
+
+                            <div class="mound_spade"></div>
+                        </div>
+                    </div>
+                </div>
+
+                @endif
+
+               @endforeach
+
+
+
 
         </div>
+
+
+
     </div>
 </div>
 

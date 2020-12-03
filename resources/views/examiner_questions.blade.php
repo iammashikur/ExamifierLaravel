@@ -38,7 +38,7 @@
 
 
             @for ($i = 0; $i < $request->total_mcq; $i++)
-                <div class="mcq-box border p-4  mb-4 bg-one">
+                <div class="mcq-box border p-4  mb-4 bg-one" id="mcQc_{{$i}}">
                     <div class="row">
                         <div class="col-12 mb-2">
                             <button class="btn btn-danger btn-sm btn-number">{{$i+1}}</button>
@@ -48,7 +48,8 @@
                         </div>
                         @for ($o = 1; $o < 5; $o++)
                         <div class="col-12 mb-2">
-                           <button class="btn btn-default btn-sm btn-number mb-2">{{$o}}</button> <textarea id="mcq{{$o}}-{{$i}}" data="mcq"  class="w-100 custom-textarea" required></textarea>
+                            <button class="btn btn-default btn-sm btn-number mb-2">@if ($o == '1'){{'A'}}@elseif($o == '2'){{'B'}}@elseif($o == '3'){{'C'}}@elseif($o == '4'){{'D'}}@endif</button>
+                            <textarea id="mcq{{$o}}-{{$i}}" data="mcq"  class="w-100 custom-textarea" required></textarea>
                         </div>
                         @endfor
                         <div class="col-12 mb-2 mt-4">
@@ -65,6 +66,7 @@
 
                         </div>
                     </div>
+                    <p class="btn btn-primary" onclick="McQCopy({{$i}})">Copy</p>
                 </div>
             @endfor
 
@@ -134,6 +136,10 @@
 </div>
 
 
+<div id="result"></div>
+
+
+
 
 
 <script>
@@ -196,6 +202,8 @@
     })
   })(jQuery);
 </script>
+
+
 
 
 @endsection

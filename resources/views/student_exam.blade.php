@@ -18,6 +18,14 @@
                     $xm_time = $xm->time;
                 @endphp
             @endforeach
+
+            <center>
+                <p class="btn btn-default btn-sm mb-4">
+                    +1 / -0.5 (For Wrong Answer)
+                </p>
+            </center>
+
+
         </div>
     </div>
 
@@ -34,11 +42,19 @@
 
                     <div class="row">
 
-                        <div class="col-12">
+                        <div class="col-12 sticky-top">
 
-                            <button type="button" class="btn btn-secondary mb-4">MCQ Question</button> <p class="btn btn-primary mb-4" id="counter"></p>
+                            <div class="bg-white pt-4">
+                                <button type="button" class="btn btn-secondary mb-4">MCQ Question</button> <p class="btn btn-primary mb-4" id="counter"></p>
+                            </div>
+
+
 
                         </div>
+
+                        @php
+                        $index = 1;
+                        @endphp
 
                         @foreach ($data->McQs as $mc)
 
@@ -51,12 +67,10 @@
                                     <div class="col-12 mb-2">
 
                                         <p class="btn btn-defaullt btn-sm mb-4">
-                                            MCQ (1)
+                                            MCQ => {{$index}}
                                         </p>
 
-                                        <p class="btn btn-default btn-sm mb-4">
-                                            +1 / -0.5 (For Wrong Answer)
-                                        </p>
+
 
                                         <p>{{$mc->question}}</p>
 
@@ -108,7 +122,9 @@
                         </div>
 
 
-
+                    @php
+                        $index++;
+                    @endphp
                     @endforeach
 
 

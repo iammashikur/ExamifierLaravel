@@ -31,9 +31,10 @@
 
                     <div class="row">
 
-                        <div class="col-12">
+                        <div class="col-12 col-12">
 
                             <button type="button" class="btn btn-secondary mb-4">MCQ Question</button>
+                            <button type="button" class="btn btn-dark mb-4" id="result"></button>
 
                         </div>
 
@@ -165,7 +166,7 @@
                     </div>
 
 
-                    <button type="button" class="btn btn-dark mb-4">Total Marks :  {{$marks}}</button>
+
 
 
             </div>
@@ -173,6 +174,13 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(function() {
+        $("#result").html("Your Total Marks: {{$marks}}");
+    });
+</script>
 
 
 

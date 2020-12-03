@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exam;
 use App\StudentData;
+use App\Notice;
 use Auth;
 use DB;
 
@@ -32,7 +33,8 @@ class StudentController extends Controller
 
     public function index()
     {
-        return view('student_dashboard');
+        $exams = Exam::where('status', 1)->orderBy('id', 'desc')->get();
+        return view('student_dashboard',compact('exams'));
     }
 
     public function exams()
@@ -58,8 +60,8 @@ class StudentController extends Controller
         }
 
         $data = json_decode($data);
-        //$data = json_decode(json_encode($data), True);
 
+        //$data = json_decode(json_encode($data), True);
 
         return view('student_exam' , compact('data'));
 
@@ -94,7 +96,11 @@ class StudentController extends Controller
 
     public function notice()
     {
-        return view('student_notice');
+
+
+        $notice = Notice::orderBy('id', 'desc')->get();
+        return view('student_notice', compact('notice'));
+
     }
 
     public function results()
