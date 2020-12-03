@@ -65,6 +65,8 @@
 
                                 $data = json_decode($data);
 
+
+
                                 $my_datax = App\StudentData::where('student_id', $item->student_id )->where('exam_id', $item->exam_id )->orderBy('id','desc')->limit('1')->get();
                                 foreach($my_datax as $val){$my_data = $val->data;}
                                 $my_data = json_decode($my_data);
@@ -84,13 +86,13 @@
 
                                 if ($mc->answer == $my_answer)
                                 {
-                                    $marks =$marks+1;
+                                    $marks =$marks+$data->Exam[0]->mark_mcq;
                                 }
 
                                 else
 
                                 {
-                                    $marks =$marks-0.5;
+                                    $marks =$marks-$data->Exam[0]->minus_mark_mcq;
                                 }
 
                             }

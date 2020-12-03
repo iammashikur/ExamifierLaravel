@@ -57,14 +57,14 @@
                                 if ($mc->answer == $my_answer)
                                 {
                                     $status = "correct";
-                                    $marks =$marks+1;
+                                    $marks =$marks+$data->Exam[0]->mark_mcq;
                                 }
 
                                 else
 
                                 {
                                     $status = "incorrect";
-                                    $marks =$marks-0.5;
+                                    $marks =$marks-$data->Exam[0]->minus_mark_mcq;
                                 }
 
                             }
