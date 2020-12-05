@@ -267,5 +267,4 @@ $data = $this->paginate($score);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
-
 }

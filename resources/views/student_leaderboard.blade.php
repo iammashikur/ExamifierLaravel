@@ -18,7 +18,7 @@
 
             <th scope="col">Place</th>
             <th scope="col">Name</th>
-            <th scope="col">Phone Number</th>
+
             <th scope="col">Score</th>
 
           </tr>
@@ -36,12 +36,6 @@
 
                 <th scope="row">{{$i}}</th>
                 <td>{{$item['name']}}</td>
-                <td>
-                    @foreach (App\User::where('id', $item['id'])->get() as $phone)
-                        {{$phone->phone}}
-                    @endforeach
-                </td>
-
                 <td>{{$item['marks']}}</td>
 
 
