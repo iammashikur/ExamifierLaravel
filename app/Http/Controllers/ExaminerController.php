@@ -177,7 +177,8 @@ class ExaminerController extends Controller
 }
 
 usort($score, function($a, $b) {
-    return $a['marks'] <=> $b['marks'];
+    if($a['marks']==$b['marks']) return 0;
+    return $a['marks'] < $b['marks']?1:-1;
 });
 
 
@@ -229,7 +230,7 @@ $data = $this->paginate($score);
         $notice->notice = $request->notice;
         $notice->save();
 
-        return redirect()->route('examiner.notice_all')->with('message', 'NOtice Added!');
+        return redirect()->route('examiner.notice_all')->with('message', 'Notice Added!');
 
     }
 

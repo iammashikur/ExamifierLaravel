@@ -249,7 +249,9 @@ class StudentController extends Controller
 }
 
 usort($score, function($a, $b) {
-    return $a['marks'] <=> $b['marks'];
+
+    if($a['marks']==$b['marks']) return 0;
+    return $a['marks'] < $b['marks']?1:-1;
 });
 
 
