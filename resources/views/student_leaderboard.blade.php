@@ -31,14 +31,10 @@
 
             <tr @if($item['id'] == Auth::user()->id) class="table-success" @endif>
 
-
-
-
                 <th scope="row">{{$i}}</th>
                 <td>{{$item['name']}}</td>
                 <td>{{$item['marks']}}</td>
-
-
+                
               </tr>
 
              @php  $i += 1; @endphp
