@@ -38,6 +38,11 @@ Route::get('/clear', function() {
 
 
 Route::get('/', 'StudentController@login')->name('home');
+Route::get('/', 'StudentController@login')->name('home');
+Route::get('/forgot-password', 'StudentController@forgot')->name('forgot');
+Route::post('/forgot-reset', 'StudentController@reset')->name('forgot.reset');
+
+
 
 
 Route::get('backend/', 'AdminController@login');
@@ -55,6 +60,7 @@ Route::group(['prefix'=>'student' , 'middleware'=>'auth'], function()
     Route::get('results', 'StudentController@results')->name('student.results');
     Route::get('result/{id}', 'StudentController@result')->name('student.result');
     Route::get('notice', 'StudentController@notice')->name('student.notice');
+    Route::get('exam/{id}/leaderboard', 'StudentController@leaderboard')->name('student.leaderboard');
 });
 
 // Examiner
@@ -81,4 +87,24 @@ Route::group(['prefix'=>'examiner' , 'middleware'=>'is_examiner'], function()
 
 
 });
+
+// Students
+Route::group(['prefix'=>'admin' , 'middleware'=>'auth'], function()
+{
+
+    Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
+    Route::get('user/delete/{id}', 'AdminController@delete')->name('admin.delete');
+    Route::get('user/add', 'AdminController@add_user')->name('admin.add_user');
+    Route::post('user/store', 'AdminController@store_user')->name('admin.store_user');
+
+    Route::get('user/add_examiner', 'AdminController@add_examiner')->name('admin.add_examiner');
+    Route::post('user/store_examiner', 'AdminController@store_examiner')->name('admin.store_examiner');
+
+
+    Route::get('user/edit/{id}', 'AdminController@edit')->name('admin.edit');
+    Route::post('user/update', 'AdminController@update')->name('admin.update_user');
+
+
+
+ });
 

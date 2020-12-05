@@ -19,7 +19,7 @@ class ExaminerController extends Controller
     public function exams()
     {
 
-        $exams = Exam::where('status', 1)->orderBy('id', 'desc')->get();
+        $exams = Exam::orderBy('id', 'desc')->get();
         return view('examiner_exams' , compact('exams'));
 
     }
@@ -48,12 +48,22 @@ class ExaminerController extends Controller
     public function exam_update(Request $request)
     {
 
-           Exam::find($request->exam_id)->update([
-                'name' => $request->name,
-                'data' => $request->data,
-                'status' => '1',
-                'examiner_id' => Auth::user()->id,
-            ]);
+
+        if($request->has('save')){
+
+            $status = 0;
+
+        }elseif($request->has('publish'))
+        {
+            $status = 1;
+        }
+
+        Exam::find($request->exam_id)->update([
+            'name' => $request->name,
+            'data' => $request->data,
+            'status' =>  $status,
+            'examiner_id' => Auth::user()->id,
+        ]);
 
         return redirect()->back()->with('message', 'Exam Updated!');
     }
@@ -67,10 +77,23 @@ class ExaminerController extends Controller
 
     public function exam_store(Request $request){
 
+
+
+
+
+        if($request->has('save')){
+
+            $status = 0;
+
+        }elseif($request->has('publish'))
+        {
+            $status = 1;
+        }
+
         $exam = new Exam();
         $exam->name = $request->name;
         $exam->data = $request->data;
-        $exam->status = '1';
+        $exam->status = $status;
         $exam->examiner_id = Auth::user()->id;
         $exam->save();
 
@@ -112,7 +135,6 @@ class ExaminerController extends Controller
         $my_data = json_decode($my_data);
 
         return view('student_result' , compact('data','id', 'my_data'));
-
 
     }
 

@@ -1,5 +1,11 @@
+
+
+
+
+
 @extends('layouts.app')
 @section('content')
+
 
 
 
@@ -19,13 +25,19 @@
 
 
 
-                            <input placeholder="phone" id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+
+
+                            <input placeholder="phone" id="phone2" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
 
                             @error('phone')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+
+
+
+
                         </div>
                         <div class="form-group">
 
@@ -42,9 +54,14 @@
                             <input class="form-check-input" type="checkbox"> Remember me
                           </label>
                         </div>
+                    <a href="{{route('forgot')}}" class="btn btn-warning float-left btn-sm login-btn">
+                            <i class="fas fa-sign-in-alt"></i> Forgot?
+                        </a>
+
                         <button type="submit" class="btn btn-success float-right btn-sm login-btn">
                             <i class="fas fa-sign-in-alt"></i> Login
                         </button>
+
                     </form>
                 </div>
             </div>
@@ -88,63 +105,120 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        <div id="otp">
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                            <div class="form-group row" id="phone-input">
+                                <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
+
+                                <div class="col-md-6">
+
+
+                                    <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
+
+                                    @error('phone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+
+                                </div>
                             </div>
+
+
+                            <div id="verify" style="display: none;">
+
+
+                                <div class="form-group row" id="phone-input">
+                                    <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Verification Code') }}</label>
+
+                                    <div class="col-md-6">
+
+                                        <input id="verificationcode" type="text" class="form-control" id="verificationcode">
+
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <center>
+
+                                <div id="recaptcha-container"></div>
+
+                            </center>
+
+
+
+
+
+
+
+
+
+
+
+
                         </div>
 
-                        <div class="form-group row">
-                            <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="phone" type="phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
 
-                                @error('phone')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div style="display:none" id="otp-success">
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
+
+
+
+                            <div class="form-group row">
+                                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                </div>
+                            </div>
+
+                                    <button type="submit" class="btn btn-primary float-right login-btn">
+                                        {{ __('Register') }}
+                                    </button>
+
                         </div>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                        <button id="next" class="btn btn-success float-right btn-sm login-btn" type="button" onclick="Otp()"> Next </button>
 
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                        <button id="verify-next" class="btn btn-success float-right btn-sm login-btn" type="button" onclick="myFunction()"> Verify </button>
 
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary float-right">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
+
+
                     </form>
 
 
@@ -168,6 +242,59 @@
         $("#login").show();
     }
 </script>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script type="text/javascript">
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyB7jtEQ3fB_LNp8vkbzfrfaRlWzibvk8mw",
+      authDomain: "doctor-d7f77.firebaseapp.com",
+      databaseURL: "https://doctor-d7f77.firebaseio.com",
+      projectId: "doctor-d7f77",
+      storageBucket: "doctor-d7f77.appspot.com",
+      messagingSenderId: "769371697772"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script type="text/javascript">
+
+$("#verify-next").hide();
+
+  function Otp()
+  {
+
+
+    $("#phone-input").hide();
+    var Phone = $("#phone").val();
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    firebase.auth().signInWithPhoneNumber('+880'+Phone , window.recaptchaVerifier)
+    .then(function(confirmationResult) {
+      window.confirmationResult = confirmationResult;
+      console.log(confirmationResult);
+
+      $("#verify").show();
+      $("#next").hide();
+      $("#verify-next").show();
+
+
+
+    });
+
+  }
+
+  var myFunction = function() {
+      window.confirmationResult.confirm(document.getElementById("verificationcode").value)
+      .then(function(result) {
+        console.log(result);
+        $("#otp-success").show();
+        $("#verify-next").hide();
+      }).catch(function(error) {
+        console.log(error);
+      });
+    };
+
+
+    </script>
 
 
 

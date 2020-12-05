@@ -36,6 +36,8 @@
                             <button type="button" class="btn btn-secondary mb-4">MCQ Question</button>
                             <button type="button" class="btn btn-dark mb-4" id="result"></button>
 
+                        <a href="{{route('student.leaderboard', ['id'=> Request::segment(3) ])}}" class="btn btn-success mb-4">Leaderboard</a>
+
                         </div>
 
                         @php
@@ -46,9 +48,6 @@
                         @foreach ($data->McQs as $mc)
 
                             @php
-
-
-
 
                             if (isset($my_data->{'mcq_'.$index})) {
 
@@ -61,13 +60,13 @@
                                 }
 
                                 else
-
                                 {
                                     $status = "incorrect";
                                     $marks =$marks-$data->Exam[0]->minus_mark_mcq;
                                 }
 
                             }
+
                             else {
                                 $my_answer = "0";
                                 $status = "incorrect";
@@ -114,27 +113,27 @@
                                         <div class="form-check mb-2">
                                             <label class="form-check-label">
                                               <input class="form-check-input" type="radio" name="mcq_{{$mc->id}}" id="mcq_{{$mc->id}}_1" value="A" @if ($my_answer == "A") checked @endif>
-                                              {{$mc->mcq_1}}
+                                             A - {{$mc->mcq_1}}
                                             </label>
                                           </div>
                                           <div class="form-check mb-2">
                                             <label class="form-check-label">
                                               <input class="form-check-input" type="radio" name="mcq_{{$mc->id}}" id="mcq_{{$mc->id}}_2" value="B" @if ($my_answer == "B") checked @endif>
-                                              {{$mc->mcq_2}}
+                                            B -  {{$mc->mcq_2}}
                                             </label>
                                           </div>
 
                                           <div class="form-check mb-2">
                                             <label class="form-check-label">
                                               <input class="form-check-input" type="radio" name="mcq_{{$mc->id}}" id="mcq_{{$mc->id}}_3" value="C" @if ($my_answer == "C") checked @endif>
-                                              {{$mc->mcq_3}}
+                                              C - {{$mc->mcq_3}}
                                             </label>
                                           </div>
 
                                           <div class="form-check mb-2">
                                             <label class="form-check-label">
                                               <input class="form-check-input" type="radio" name="mcq_{{$mc->id}}" id="mcq_{{$mc->id}}_4" value="D" @if ($my_answer == "D") checked @endif>
-                                              {{$mc->mcq_4}}
+                                              D - {{$mc->mcq_4}}
                                             </label>
                                           </div>
 
