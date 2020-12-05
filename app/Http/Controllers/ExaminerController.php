@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 use App\Exam;
 use App\StudentData;
 use App\Notice;
+use App\User;
 use Auth;
 use DB;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 class ExaminerController extends Controller
 {
     public function index(){
