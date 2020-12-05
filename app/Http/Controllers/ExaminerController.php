@@ -108,11 +108,84 @@ class ExaminerController extends Controller
 
     }
 
-    public function result_list($id){
+    // Leader Board
+
+    public function result_list($id)
+    {
+
+        $score = [];
 
         $students = StudentData::where('exam_id', $id)->orderBy('id', 'desc')->get();
-        return view('examiner_result_list' , compact('students'));
+        foreach ($students as $item)
+{
+    foreach (User::where('id', $item->student_id)
+        ->get() as $student)
+    {
 
+        $index = 1;
+        $marks = 0;
+        $exam = Exam::find($item->exam_id)
+            ->get();
+        foreach ($exam as $ex)
+        {
+            $data = $ex->data;
+        }
+        $data = json_decode($data);
+        $my_datax = StudentData::where('student_id', $item->student_id)
+            ->where('exam_id', $item->exam_id)
+            ->orderBy('id', 'desc')
+            ->limit('1')
+            ->get();
+        foreach ($my_datax as $val)
+        {
+            $my_data = $val->data;
+        }
+        $my_data = json_decode($my_data);
+
+        foreach ($data->McQs as $mc)
+        {
+
+            if (isset($my_data->{'mcq_' . $index}))
+            {
+                $my_answer = $my_data->{'mcq_' . $index};
+                if ($mc->answer == $my_answer)
+                {
+                    $marks = $marks + $data->Exam[0]->mark_mcq;
+                }
+                else
+                {
+                    $marks = $marks - $data->Exam[0]->minus_mark_mcq;
+                }
+            }
+
+            $index++;
+
+        }
+
+        $score[] = array(
+            'id' => $item->student_id,
+            'name' => $student->name,
+            'marks' => $marks,
+        );
+
+    }
+}
+
+usort($score, function($a, $b) {
+    return $a['marks'] <=> $b['marks'];
+});
+
+
+$data = $this->paginate($score);
+
+        return view('student_leaderboard', compact('data'));
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
     public function student_result($student_id, $exam_id)
@@ -134,7 +207,7 @@ class ExaminerController extends Controller
         }
         $my_data = json_decode($my_data);
 
-        return view('student_result' , compact('data','id', 'my_data'));
+        return view('examiner_result_list' , compact('data','id', 'my_data'));
 
     }
 

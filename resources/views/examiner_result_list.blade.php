@@ -22,126 +22,51 @@
         <div class="col-md-9 mt-4">
 
 
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a>Examiner</a></li>
-                <li class="breadcrumb-item"><a>Exam Results</a></li>
-                <li class="breadcrumb-item active"><a>Student Results List</a></li>
-              </ol>
+    <table class="table border">
+        <thead>
+          <tr class="table-danger">
 
+            <th scope="col">Place</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Score</th>
 
-            <table class="table table-hover border">
-                <thead>
-                  <tr>
-                    <th scope="col">Student Name</th>
-                    <th scope="col">Exam Date</th>
-                    <th scope="col">Total Mark</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
+          </tr>
+        </thead>
+        <tbody>
 
+            @php $i = ($data->currentpage()-1)* $data->perpage() + 1;@endphp
 
-                    @foreach ($students as $item)
+            @foreach ($data as $item)
 
-
-                    @foreach (App\User::where('id', $item->student_id)->get() as $student)
-
-
-                    <tr>
-                        <th scope="row">{{$student->name}}</th>
-                        <td>{{date('h:i A - d M Y', strtotime($item->created_at))}}</td>
-                        <td>
-
-
-
-                            @php
-
-                                $index =1;
-                                $marks =0;
-
-                                $exam = App\Exam::find($item->exam_id)->get();
-
-                                foreach($exam as $ex){ $data = $ex->data;}
-
-                                $data = json_decode($data);
-
-
-
-                                $my_datax = App\StudentData::where('student_id', $item->student_id )->where('exam_id', $item->exam_id )->orderBy('id','desc')->limit('1')->get();
-                                foreach($my_datax as $val){$my_data = $val->data;}
-                                $my_data = json_decode($my_data);
-
-                            @endphp
-
-
-                            @foreach ($data->McQs as $mc)
-                            @php
+            <tr @if($item['id'] == Auth::user()->id) class="table-success" @endif>
 
 
 
 
-                            if (isset($my_data->{'mcq_'.$index})) {
-
-                                $my_answer = $my_data->{'mcq_'.$index};
-
-                                if ($mc->answer == $my_answer)
-                                {
-                                    $marks =$marks+$data->Exam[0]->mark_mcq;
-                                }
-
-                                else
-
-                                {
-                                    $marks =$marks-$data->Exam[0]->minus_mark_mcq;
-                                }
-
-                            }
-                            @endphp
-
-
-                            @php
-                                $index++;
-                            @endphp
-                            @endforeach
-
-                            {{$marks}}
-
-
-
-
-
-
-
-                        </td>
-                        <td>
-                            <a href="{{route('examiner.student_result', ['student_id' => $item->student_id, 'exam_id' => $item->exam_id])}}" class="btn btn-info btn-sm">Details</a>
-                        </td>
-                      </tr>
-
-
-
-
-
+                <th scope="row">{{$i}}</th>
+                <td>{{$item['name']}}</td>
+                <td>
+                    @foreach (App\User::where('id', $item['id'])->get() as $phone)
+                        {{$phone->phone}}
                     @endforeach
-                   @endforeach
+                </td>
+
+                <td>{{$item['marks']}}</td>
+
+
+              </tr>
+
+             @php  $i += 1; @endphp
+              @endforeach
 
 
 
 
-                </tbody>
-            </table>
+        </tbody>
+      </table>
 
-            <div class="row">
-
-
-
-
-
-
-
-
-
-            </div>
+      {{ $data->withPath('')->render() }}
 
 
         </div>

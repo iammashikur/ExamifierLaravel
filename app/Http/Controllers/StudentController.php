@@ -184,6 +184,9 @@ class StudentController extends Controller
 
     }
 
+
+    // Leader Board
+
     public function leaderboard($id)
     {
 
