@@ -275,7 +275,7 @@ $("#verify-next").hide();
       $("#verify").show();
       $("#next").hide();
       $("#verify-next").show();
-
+      $("#recaptcha-container").hide();
 
 
     });
@@ -288,6 +288,7 @@ $("#verify-next").hide();
         console.log(result);
         $("#otp-success").show();
         $("#verify-next").hide();
+        $("#verify").hide();
       }).catch(function(error) {
         console.log(error);
       });
