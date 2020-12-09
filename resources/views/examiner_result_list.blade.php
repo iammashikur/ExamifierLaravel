@@ -3,75 +3,184 @@
 @section('content')
 
 
-<div class="container">
+
+<div class="container exam-conatiner">
+
+
     <div class="row">
-        <div class="col-md-3 mt-4">
+        <div class="col-12 mb-4">
+            @foreach ($data->Exam as $xm)
 
-            <div class="list-group">
+                <h2 class="text-center mt-4">{{ $xm->name}}</h2>
+                <p class="text-center mt-2">Subject : {{ $xm->subject}}</p>
 
-                <a href="{{url('examiner/dashboard')}}" class="list-group-item list-group-item-action active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                <a href="{{url('examiner/exams')}}" class="list-group-item list-group-item-action"><i class="fas fa-pencil-ruler"></i> Exams</a>
-                <a href="{{url('examiner/results')}}" class="list-group-item list-group-item-action"><i class="fas fa-clock"></i> Results</a>
-                <a href="{{url('examiner/notice')}}" class="list-group-item list-group-item-action"><i class="fas fa-exclamation-triangle"></i> Notice</a>
+            @endforeach
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="exam-form mb-4">
+
+
+
+            <input type="hidden" value="{{Request::segment(3)}}" name="exam_id">
+
+                    <div class="row">
+
+                        <div class="col-12 col-12">
+
+                            <button type="button" class="btn btn-secondary mb-4">MCQ Question</button>
+                            <button type="button" class="btn btn-dark mb-4" id="result"></button>
+
+                        </div>
+
+                        @php
+                            $index =1;
+                            $marks =0;
+                        @endphp
+
+                        @foreach ($data->McQs as $mc)
+
+                            @php
+
+
+
+                            if (isset($my_data->{'mcq_'.$index})) {
+
+                                $my_answer = $my_data->{'mcq_'.$index};
+
+                                if ($mc->answer == $my_answer)
+                                {
+                                    $status = "correct";
+                                    $marks+= $data->Exam[0]->mark_mcq;
+                                }
+
+                                else
+
+                                {
+                                    $status = "incorrect";
+                                    $marks-= $data->Exam[0]->minus_mark_mcq;
+                                }
+
+                            }
+
+                            else {
+                                $my_answer = "0";
+                                $status = "incorrect";
+                            }
+
+                            @endphp
+
+                        <div class="col-md-6 col-12 mb-4">
+
+                            <div class="mcq-box border p-4" @if($status == "correct") style="background: rgb(203, 204, 247)" @else style="background: rgb(247, 200, 200)"  @endif>
+
+                                <div class="row">
+
+                                    <div class="col-12 mb-2">
+
+                                        <p class="btn btn-success btn-sm mb-4">
+                                            ({{$index}})
+                                        </p>
+
+
+                                        @if($status == "correct")
+                                        <p class="btn btn-success btn-sm mb-4">
+                                            Correct Answer
+                                        </p>
+                                        @else
+                                        <p class="btn btn-danger btn-sm mb-4">
+                                            Incorrect Answer
+                                        </p>
+
+                                        <p class="btn btn-success btn-sm mb-4">
+                                            Correct : {{$mc->answer}}
+                                        </p>
+                                        @endif
+
+
+
+                                        <p>{{$mc->question}}</p>
+
+                                    </div>
+
+
+
+                                    <div class="col-12">
+                                        <div class="form-check mb-2">
+                                            <label class="form-check-label">
+                                              <input class="form-check-input" type="radio" name="mcq_{{$mc->id}}" id="mcq_{{$mc->id}}_1" value="A" @if ($my_answer == "A") checked @endif>
+                                             A - {{$mc->mcq_1}}
+                                            </label>
+                                          </div>
+                                          <div class="form-check mb-2">
+                                            <label class="form-check-label">
+                                              <input class="form-check-input" type="radio" name="mcq_{{$mc->id}}" id="mcq_{{$mc->id}}_2" value="B" @if ($my_answer == "B") checked @endif>
+                                            B -  {{$mc->mcq_2}}
+                                            </label>
+                                          </div>
+
+                                          <div class="form-check mb-2">
+                                            <label class="form-check-label">
+                                              <input class="form-check-input" type="radio" name="mcq_{{$mc->id}}" id="mcq_{{$mc->id}}_3" value="C" @if ($my_answer == "C") checked @endif>
+                                              C - {{$mc->mcq_3}}
+                                            </label>
+                                          </div>
+
+                                          <div class="form-check mb-2">
+                                            <label class="form-check-label">
+                                              <input class="form-check-input" type="radio" name="mcq_{{$mc->id}}" id="mcq_{{$mc->id}}_4" value="D" @if ($my_answer == "D") checked @endif>
+                                              D - {{$mc->mcq_4}}
+                                            </label>
+                                          </div>
+
+                                    </div>
+
+
+
+
+
+
+
+
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+                    @php
+                        $index++;
+                    @endphp
+                    @endforeach
+
+
+
+                    </div>
+
+
+
+
 
             </div>
 
         </div>
-
-
-        <div class="col-md-9 mt-4">
-
-
-    <table class="table border">
-        <thead>
-          <tr class="table-danger">
-
-            <th scope="col">Place</th>
-            <th scope="col">Name</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Score</th>
-
-          </tr>
-        </thead>
-        <tbody>
-
-            @php $i = ($data->currentpage()-1)* $data->perpage() + 1;@endphp
-
-            @foreach ($data as $item)
-
-            <tr @if($item['id'] == Auth::user()->id) class="table-success" @endif>
-
-
-
-
-                <th scope="row">{{$i}}</th>
-                <td>{{$item['name']}}</td>
-                <td>
-                    @foreach (App\User::where('id', $item['id'])->get() as $phone)
-                        {{$phone->phone}}
-                    @endforeach
-                </td>
-
-                <td>{{$item['marks']}}</td>
-
-
-              </tr>
-
-             @php  $i += 1; @endphp
-              @endforeach
-
-
-
-
-        </tbody>
-      </table>
-
-      {{ $data->withPath('')->render() }}
-
-
-        </div>
     </div>
 </div>
+
+
+<script>
+    $(function() {
+        $("#result").html("Marks: {{$marks}}");
+    });
+</script>
 
 
 

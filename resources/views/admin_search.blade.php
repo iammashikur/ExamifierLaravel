@@ -58,11 +58,11 @@
               {{$examiners->links()}}
 
 
-              <button class="btn btn-default mr-4">Students</button><a href="{{route('admin.add_user')}}" class="btn btn-primary">Add</a>
+              <button class="btn btn-default mr-4">Students</button><a href="{{url('admin/search')}}" class="btn btn-primary">Add</a>
 
             <form class="form-inline float-right" method="GET" action="{{route('search')}}">
 
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="search">
+                <input class="form-control mr-sm-2" type="text" value="{!!$request->search!!}" name="search">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
               </form>
 

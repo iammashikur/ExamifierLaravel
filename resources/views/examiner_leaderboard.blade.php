@@ -12,6 +12,11 @@
 
 
 
+
+<a href="{{route('pdf',['exam_id' => $exam_id])}}" class="btn btn-danger btn-sm mb-4"><i class="fas fa-file-pdf"></i> Export PDF</a>
+
+
+
     <table class="table border">
         <thead>
           <tr class="table-danger">
@@ -20,6 +25,7 @@
             <th scope="col">Name</th>
 
             <th scope="col">Mark</th>
+            <th scope="col">Action</th>
 
           </tr>
         </thead>
@@ -34,6 +40,11 @@
                 <th scope="row">{{$i}}</th>
                 <td>{{$item['name']}}</td>
                 <td>{{$item['marks']}}</td>
+
+                <td>
+                    <a href="{{route('examiner.student_result', ['student_id' => $item['id'], 'exam_id' => $exam_id])}}" class="btn btn-primary btn-sm">View</a>
+                </td>
+
 
               </tr>
 

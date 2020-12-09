@@ -77,7 +77,9 @@ Route::group(['prefix'=>'examiner' , 'middleware'=>'is_examiner'], function()
     Route::post('exam/update', 'ExaminerController@exam_update')->name('examiner.exam_update');
     // Show Results
     Route::get('results', 'ExaminerController@results')->name('examiner.results');
+
     Route::get('result/{id}', 'ExaminerController@result_list')->name('examiner.result_list');
+
     Route::get('result/student/{student_id}/exam/{exam_id}', 'ExaminerController@student_result')->name('examiner.student_result');
     // Notice
     Route::get('notice', 'ExaminerController@notice')->name('examiner.notice_all');
@@ -87,6 +89,8 @@ Route::group(['prefix'=>'examiner' , 'middleware'=>'is_examiner'], function()
 
 
 });
+
+Route::get('/pdf/{exam_id}', 'ResultController@pdf')->name('pdf');
 
 // Students
 Route::group(['prefix'=>'admin' , 'middleware'=>'auth'], function()
@@ -103,6 +107,8 @@ Route::group(['prefix'=>'admin' , 'middleware'=>'auth'], function()
 
     Route::get('user/edit/{id}', 'AdminController@edit')->name('admin.edit');
     Route::post('user/update', 'AdminController@update')->name('admin.update_user');
+
+    Route::get('search', 'AdminController@search')->name('search');
 
 
 

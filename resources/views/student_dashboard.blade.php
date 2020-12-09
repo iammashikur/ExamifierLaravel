@@ -32,7 +32,7 @@
                 <div class="content">
                     <canvas class="snow" id="snow"></canvas>
                     <div class="main-text">
-                        <h1>Welcome !<br/>To Examifier..</h1><a class="home-link" href="{{route('student.exams')}}">Start An Exam.</a>
+                        <h1>Welcome !<br/>To Mediexams..</h1><a class="home-link" href="{{route('student.exams')}}">Start An Exam.</a>
                     </div>
                     <div class="ground">
                         <div class="mound">
@@ -48,7 +48,7 @@
                 <div class="content">
                     <canvas class="snow" id="snow"></canvas>
                     <div class="main-text">
-                        <h1>Welcome !<br/>To Examifier ..</h1><a class="home-link" href="{{route('student.results')}}">See Your Result.</a>
+                        <h1>Welcome !<br/>To Mediexams ..</h1><a class="home-link" href="{{route('student.results')}}">See Your Result.</a>
                     </div>
                     <div class="ground">
                         <div class="mound">

@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@500&family=Poppins:wght@500&display=swap');
+body {
+    font-family: 'Poppins', 'Baloo Da 2', sans-serif;
+    font-size: 16px;
+}
+
+.form-control {
+    font-size: 0.9125rem;
+    color: #2f2f2f;
+}
+
 .box {
     background: cadetblue;
     display: block;

@@ -21,7 +21,7 @@
 
             <center>
                 <p class="btn btn-default btn-sm mb-4">
-                    +1 / -0.5 (For Wrong Answer)
+                    +{{ $xm->mark_mcq}} / -{{ $xm->minus_mark_mcq}} (For Wrong Answer)
                 </p>
             </center>
 
@@ -311,7 +311,7 @@
                     </div>
 
 
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success mb-5">Submit</button>
 
 
 

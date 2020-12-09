@@ -123,7 +123,12 @@
                           </div>
 
                     </div>
+
+
                 </div>
+
+                <p class="btn btn-primary" onclick="Copy({{$i}})">Copy</p>
+                <p class="btn btn-success" onclick="Paste({{$i}})">Paste</p>
             </div>
 
 
@@ -200,6 +205,48 @@
 
 
 <script>
+
+
+function Copy(val) {
+	var que = $('#mcqQue-'+val).val();
+	var ans = $('#mcqAns-'+val).val();
+	var mcq_1 = $('#mcq1-'+val).val();
+	var mcq_2 = $('#mcq2-'+val).val();
+	var mcq_3 = $('#mcq3-'+val).val();
+	var mcq_4 = $('#mcq4-'+val).val();
+
+	console.log(que, ans, mcq_1, mcq_2, mcq_3, mcq_4);
+	const data = {
+		question: que,
+		answer: ans,
+		mcq_1: mcq_1,
+		mcq_2: mcq_2,
+		mcq_3: mcq_3,
+		mcq_4: mcq_4,
+	}
+	localStorage.setItem('formData', JSON.stringify(data));
+
+	console.log(localStorage.getItem('formData'));
+
+}
+
+
+function Paste(val){
+
+    const data = JSON.parse(localStorage.getItem('formData'))
+
+
+    var que = $('#mcqQue-'+val).val(data.question);
+	var ans =   $('#mcqAns-'+val).val(data.answer);
+	var mcq_1 =    $('#mcq1-'+val).val(data.mcq_1);
+	var mcq_2 =    $('#mcq2-'+val).val(data.mcq_2);
+	var mcq_3 =    $('#mcq3-'+val).val(data.mcq_3);
+	var mcq_4 =    $('#mcq4-'+val).val(data.mcq_4);
+
+    $('textarea, input, select').click();
+
+}
+
 
 
     $(function() {

@@ -173,6 +173,36 @@ class AdminController extends Controller
 
     }
 
+    public function search(Request $request)
+    {
+
+        if($request->has('search')) {
+
+
+        $examiners = User::where('is_examiner' , 1)->paginate(10);
+
+        $searchQuery = $request->search;
+        $requestData = ['name', 'phone'];
+         $students = User::where('is_admin' , null)->where('is_examiner' , null)->where(function($q) use($requestData, $searchQuery) {
+                               foreach ($requestData as $field)
+                                  $q->orWhere($field, 'like', "%{$searchQuery}%");
+                       })->paginate(10);
+
+
+                       return view('admin_search', compact('students','examiners','request'));
+
+
+
+        } else {
+            return route('/');
+        }
+
+
+
+
+
+    }
+
 
 
 

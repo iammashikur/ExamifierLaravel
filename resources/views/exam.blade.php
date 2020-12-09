@@ -20,7 +20,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">Examifier</a>
+            <a class="navbar-brand" href="#">Mediexams</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -63,7 +63,7 @@
 
 
             <div class="col-md-9 mt-4">
-                <form action="{{url('/examiner/exam')}}" method="POST" class="examifier-form">
+                <form action="{{url('/examiner/exam')}}" method="POST" class="Mediexams-form">
 
                 <div class="exam-create">
 

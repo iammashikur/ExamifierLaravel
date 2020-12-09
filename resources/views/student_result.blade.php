@@ -36,7 +36,7 @@
                             <button type="button" class="btn btn-secondary mb-4">MCQ Question</button>
                             <button type="button" class="btn btn-dark mb-4" id="result"></button>
 
-                        <a href="{{route('student.leaderboard', ['id'=> Request::segment(3) ])}}" class="btn btn-success mb-4">Leaderboard</a>
+                        <a href="{{route('student.leaderboard', ['id'=> Request::segment(3) ])}}" class="btn btn-success mb-4">Result Board</a>
 
                         </div>
 
@@ -49,6 +49,8 @@
 
                             @php
 
+
+
                             if (isset($my_data->{'mcq_'.$index})) {
 
                                 $my_answer = $my_data->{'mcq_'.$index};
@@ -56,13 +58,14 @@
                                 if ($mc->answer == $my_answer)
                                 {
                                     $status = "correct";
-                                    $marks =$marks+$data->Exam[0]->mark_mcq;
+                                    $marks+= $data->Exam[0]->mark_mcq;
                                 }
 
                                 else
+
                                 {
                                     $status = "incorrect";
-                                    $marks =$marks-$data->Exam[0]->minus_mark_mcq;
+                                    $marks-= $data->Exam[0]->minus_mark_mcq;
                                 }
 
                             }

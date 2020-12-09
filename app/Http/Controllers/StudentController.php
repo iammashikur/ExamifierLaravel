@@ -189,74 +189,78 @@ class StudentController extends Controller
 
     public function leaderboard($id)
     {
-
         $score = [];
+        $exam = Exam::where('id', $id)->orderBy('id', 'desc')->get();
+        $data = '';
 
-        $students = StudentData::where('exam_id', $id)->orderBy('id', 'desc')->get();
-        foreach ($students as $item)
-{
-    foreach (User::where('id', $item->student_id)
-        ->get() as $student)
-    {
 
-        $index = 1;
-        $marks = 0;
-        $exam = Exam::find($item->exam_id)
-            ->get();
-        foreach ($exam as $ex)
-        {
-            $data = $ex->data;
-        }
+        foreach($exam as $ex){ $data = $ex->data;}
         $data = json_decode($data);
-        $my_datax = StudentData::where('student_id', $item->student_id)
-            ->where('exam_id', $item->exam_id)
-            ->orderBy('id', 'desc')
-            ->limit('1')
-            ->get();
-        foreach ($my_datax as $val)
-        {
-            $my_data = $val->data;
-        }
-        $my_data = json_decode($my_data);
 
-        foreach ($data->McQs as $mc)
+        foreach(StudentData::where('exam_id', $id )->orderBy('id','desc')->get() as $studs)
         {
 
-            if (isset($my_data->{'mcq_' . $index}))
+            $my_datax = StudentData::where('student_id',  $studs->student_id )->where('exam_id', $id )->orderBy('id','desc')->limit('1')->get();
+
+            $my_data = '';
+            foreach($my_datax as $val)
             {
-                $my_answer = $my_data->{'mcq_' . $index};
-                if ($mc->answer == $my_answer)
-                {
-                    $marks = $marks + $data->Exam[0]->mark_mcq;
-                }
-                else
-                {
-                    $marks = $marks - $data->Exam[0]->minus_mark_mcq;
-                }
+                $my_data = $val->data;
             }
+            $my_data = json_decode($my_data);
 
+
+            $index =1;
+            $marks =0;
+
+
+            foreach ($data->McQs as $mc){
+
+                if (isset($my_data->{'mcq_'.$index})) {
+                    $my_answer = $my_data->{'mcq_'.$index};
+                    if ($mc->answer == $my_answer)
+                    {
+
+                        $marks+= $data->Exam[0]->mark_mcq;
+                    }
+                    else
+                    {
+
+                        $marks-= $data->Exam[0]->minus_mark_mcq;
+                    }
+                }
+                else {
+                    $my_answer = "0";
+
+                }
             $index++;
 
+            }
+
+            foreach(User::where('id', $studs->student_id)->get() as $stu)
+            {
+                $name = $stu->name;
+            }
+
+            $score[] = array(
+                'id' => $studs->student_id,
+                'name' => $name,
+                'marks' => $marks,
+            );
+
         }
 
-        $score[] = array(
-            'id' => $item->student_id,
-            'name' => $student->name,
-            'marks' => $marks,
-        );
+        usort($score, function($a, $b) {
 
-    }
-}
-
-usort($score, function($a, $b) {
-
-    if($a['marks']==$b['marks']) return 0;
-    return $a['marks'] < $b['marks']?1:-1;
-});
+            if($a['marks']==$b['marks']) return 0;
+            return $a['marks'] < $b['marks']?1:-1;
+        });
 
 
-$data = $this->paginate($score);
 
+        //print_r($score);
+
+        $data = $this->paginate($score);
         return view('student_leaderboard', compact('data'));
     }
 
