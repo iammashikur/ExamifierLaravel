@@ -35,7 +35,8 @@
 
 
                     <div class="alert alert-success">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{session('success')}}
+
+                         {{session('success')}} <a href="{{route('login')}}" class="btn btn-dark btn-sm ml-4 float-right">Login</a>
                         </div>
 
 
