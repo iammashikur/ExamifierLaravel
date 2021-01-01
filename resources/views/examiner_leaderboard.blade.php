@@ -23,7 +23,7 @@
 
             <th scope="col">Merit Position</th>
             <th scope="col">Name</th>
-
+            <th scope="col">Phone</th>
             <th scope="col">Mark</th>
             <th scope="col">Action</th>
 
@@ -39,6 +39,7 @@
 
                 <th scope="row">{{$i}}</th>
                 <td>{{$item['name']}}</td>
+                <td>{{$item['phone']}}</td>
                 <td>{{$item['marks']}}</td>
 
                 <td>

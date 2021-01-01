@@ -14,25 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Cache Cleaner
-Route::get('/clear', function() {
-
+Route::get('/clear', function () {
     return $exitCode = Artisan::call('config:cache');
+});
 
+
+ Route::get('/migrate', function () {
+     return $exitCode = Artisan::call('migrate:fresh');
  });
 
 
- Route::get('/migrate', function() {
 
-    return $exitCode = Artisan::call('migrate:fresh');
-
- });
-
-
-
- Route::get('/seed', function() {
-
-    return $exitCode = Artisan::call('db:seed');
-
+ Route::get('/seed', function () {
+     return $exitCode = Artisan::call('db:seed');
  });
 
 
@@ -51,8 +45,7 @@ Auth::routes();
 
 
 // Students
-Route::group(['prefix'=>'student' , 'middleware'=>'auth'], function()
-{
+Route::group(['prefix'=>'student' , 'middleware'=>'auth'], function () {
     Route::get('dashboard', 'StudentController@index')->name('student.dashboard');
     Route::get('exams', 'StudentController@exams')->name('student.exams');
     Route::get('exam/{id}', 'StudentController@exam');
@@ -64,10 +57,9 @@ Route::group(['prefix'=>'student' , 'middleware'=>'auth'], function()
 });
 
 // Examiner
-Route::group(['prefix'=>'examiner' , 'middleware'=>'is_examiner'], function()
-{
+Route::group(['prefix'=>'examiner' , 'middleware'=>'is_examiner'], function () {
     Route::get('dashboard', 'ExaminerController@index')->name('examiner.dashboard');
-     // Make An Exam
+    // Make An Exam
     Route::get('questions', 'ExaminerController@questions')->name('examiner.questions');
     Route::post('exam', 'ExaminerController@exam_store')->name('examiner.exam_store');
     // All Exams
@@ -85,17 +77,14 @@ Route::group(['prefix'=>'examiner' , 'middleware'=>'is_examiner'], function()
     Route::get('notice', 'ExaminerController@notice')->name('examiner.notice_all');
     Route::post('notice', 'ExaminerController@notice_insert')->name('examiner.notice');
     Route::get('notice_delete/{id}', 'ExaminerController@notice_delete')->name('examiner.notice_delete');
-
-
-
 });
+
 
 Route::get('/pdf/{exam_id}', 'ResultController@pdf')->name('pdf');
 
-// Students
-Route::group(['prefix'=>'admin' , 'middleware'=>'auth'], function()
-{
 
+// Students
+Route::group(['prefix'=>'admin' , 'middleware'=>'auth'], function () {
     Route::get('dashboard', 'AdminController@index')->name('admin.dashboard');
     Route::get('user/delete/{id}', 'AdminController@delete')->name('admin.delete');
     Route::get('user/add', 'AdminController@add_user')->name('admin.add_user');
@@ -109,8 +98,4 @@ Route::group(['prefix'=>'admin' , 'middleware'=>'auth'], function()
     Route::post('user/update', 'AdminController@update')->name('admin.update_user');
 
     Route::get('search', 'AdminController@search')->name('search');
-
-
-
- });
-
+});

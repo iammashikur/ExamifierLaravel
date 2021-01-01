@@ -169,11 +169,13 @@ class ExaminerController extends Controller
             foreach(User::where('id', $studs->student_id)->get() as $stu)
             {
                 $name = $stu->name;
+                $phone = $stu->phone;
             }
 
             $score[] = array(
                 'id' => $studs->student_id,
                 'name' => $name,
+                'phone' => $phone,
                 'marks' => $marks,
             );
 
