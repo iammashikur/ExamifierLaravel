@@ -8,7 +8,9 @@
 
     <center>
         <h1 class="mb-2">Result Board</h1>
-        <h3 align="center" class="mb-5">{{ $data->Exam[0]->subject}} - {{ $data->Exam[0]->name }}</h3>
+        <h3 align="center" class="mb-2">{{ $data->Exam[0]->subject}} - {{ $data->Exam[0]->name }}</h3>
+         <p align="center">{{\Carbon\Carbon::parse($date)->format('Y-m-d h:i a')}}</p>
+        <p align="center">Total Mark {{$total}}</p>
     </center>
 
 

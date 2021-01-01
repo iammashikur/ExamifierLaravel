@@ -36,6 +36,7 @@
                             <button type="button" class="btn btn-secondary mb-4">MCQ Question</button>
                             <button type="button" class="btn btn-dark mb-4" id="result"></button>
 
+
                         </div>
 
                         @php
@@ -70,14 +71,14 @@
 
                             else {
                                 $my_answer = "0";
-                                $status = "incorrect";
+                                $status = "not-answered";
                             }
 
                             @endphp
 
                         <div class="col-md-6 col-12 mb-4">
 
-                            <div class="mcq-box border p-4" @if($status == "correct") style="background: rgb(203, 204, 247)" @else style="background: rgb(247, 200, 200)"  @endif>
+                            <div class="mcq-box border p-4" @if($status == "correct") style="background: rgb(203, 204, 247)" @elseif($status == "incorrect") style="background: rgb(247, 200, 200)"  @elseif($status == "not-answered") style="background: rgb(238, 255, 177)"  @endif>
 
                                 <div class="row">
 
@@ -92,7 +93,16 @@
                                         <p class="btn btn-success btn-sm mb-4">
                                             Correct Answer
                                         </p>
-                                        @else
+                                        @elseif($status == "not-answered")
+                                        <p class="btn btn-primary btn-sm mb-4">
+                                            Not Answered
+                                        </p>
+
+                                        <p class="btn btn-success btn-sm mb-4">
+                                            Correct : {{$mc->answer}}
+                                        </p>
+
+                                        @elseif($status == "incorrect")
                                         <p class="btn btn-danger btn-sm mb-4">
                                             Incorrect Answer
                                         </p>
@@ -178,7 +188,7 @@
 
 <script>
     $(function() {
-        $("#result").html("Marks: {{$marks}}");
+        $("#result").html("Your Total Marks: {{$marks}}");
     });
 </script>
 

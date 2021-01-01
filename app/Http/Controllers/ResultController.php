@@ -79,6 +79,6 @@ class ResultController extends Controller
             return $a['marks'] < $b['marks']?1:-1;
         });
 
-        return view('export_page', compact('score','data'));
+        return view('export_page', compact('score','data','date','total'));
     }
 }
