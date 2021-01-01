@@ -15,7 +15,7 @@
 
 
 
-    <table class="table border">
+    <table class="table border" style="font-size: 24px ">
         <thead>
           <tr class="table-danger">
 
